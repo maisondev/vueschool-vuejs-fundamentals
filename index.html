@@ -7,6 +7,10 @@
 <body>
 <div id="app">
     <div>
+        <button v-if="state==='default'" @click="changeState">Adicionar Item</button>
+        <button v-if="state==='edit'" @click="state='default'"> Cancelar</button>
+    </div>
+    <div v-if="state === 'edit'">
         <input type="text" v-model="novoItem" @keyup.enter="saveItem"/>
         <button @click="saveItem()">Adicionar</button>
     </div>
@@ -16,6 +20,7 @@
     <ul v-for="item in items">
         <li > {{item}}</li>
     </ul>
+    <p v-if="items.length <= 0 ">Nenhum elemento adicionado!</p>
 </div>
 
 <script src="https://unpkg.com/vue@2.7.16/dist/vue.js"></script>
@@ -23,17 +28,19 @@
     var instanciaVue= new Vue({
         el: "#app",
         data: {
+            state: 'default',
             header: 'Digite um texto',
             novoItem:undefined,
             items: [
-                "10 caixas de leite",
-                "2 jogos",
-                "20 copos"
+
             ]
         },
         methods:{
             saveItem: function (){
                 this.items.push(this.novoItem)
+            },
+            changeState: function (){
+                this.state = "edit";
             }
         }
     });
