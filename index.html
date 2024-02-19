@@ -12,7 +12,7 @@
     </div>
     <div v-if="state === 'edit'">
         <input type="text" v-model="novoItem" @keyup.enter="saveItem"/>
-        <button @click="saveItem()">Adicionar</button>
+        <button @click="saveItem()" :disabled="novoItem?false:true">Adicionar</button>
     </div>
     <h1>Lista de elementos</h1>
     <h2>{{header}}</h2>
@@ -37,7 +37,8 @@
         },
         methods:{
             saveItem: function (){
-                this.items.push(this.novoItem)
+                this.items.push(this.novoItem);
+                this.novoItem=undefined
             },
             changeState: function (novoEstado){
                 this.state =novoEstado;
