@@ -7,8 +7,8 @@
 <body>
 <div id="app">
     <div>
-        <input type="text" v-model="novoItem" @keyup.enter="items.push(novoItem)"/>
-        <button @click="items.push(novoItem)">Adicionar</button>
+        <input type="text" v-model="novoItem" @keyup.enter="saveItem"/>
+        <button @click="saveItem()">Adicionar</button>
     </div>
     <h1>Lista de elementos</h1>
     <h2>{{header}}</h2>
@@ -30,6 +30,11 @@
                 "2 jogos",
                 "20 copos"
             ]
+        },
+        methods:{
+            saveItem: function (){
+                this.items.push(this.novoItem)
+            }
         }
     });
 </script>
