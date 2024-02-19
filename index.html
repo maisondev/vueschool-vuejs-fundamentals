@@ -7,8 +7,8 @@
 <body>
 <div id="app">
     <div>
-        <button v-if="state==='default'" @click="changeState">Adicionar Item</button>
-        <button v-if="state==='edit'" @click="state='default'"> Cancelar</button>
+        <button v-if="state==='default'" @click="changeState('edit')">Adicionar Item</button>
+        <button v-if="state==='edit'" @click="changeState('default')"> Cancelar</button>
     </div>
     <div v-if="state === 'edit'">
         <input type="text" v-model="novoItem" @keyup.enter="saveItem"/>
@@ -39,8 +39,9 @@
             saveItem: function (){
                 this.items.push(this.novoItem)
             },
-            changeState: function (){
-                this.state = "edit";
+            changeState: function (novoEstado){
+                this.state =novoEstado;
+                this.novoItem = undefined
             }
         }
     });
