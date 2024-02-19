@@ -6,9 +6,13 @@
 </head>
 <body>
 <div id="app">
-    <h1>Olá mundo com VueJS</h1>
+    <div>
+        <input type="text" v-model="novoItem" @keyup.enter="items.push(novoItem)"/>
+        <button @click="items.push(novoItem)">Adicionar</button>
+    </div>
+    <h1>Lista de elementos</h1>
     <h2>{{header}}</h2>
-    <input type="text" v-model="novoItem"/>
+
     <ul v-for="item in items">
         <li > {{item}}</li>
     </ul>
