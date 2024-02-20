@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="index.css">
     <title>Vue Fundamentos</title>
 </head>
 <body>
@@ -10,17 +11,19 @@
         <button v-if="state==='default'" @click="changeState('edit')">Adicionar Item</button>
         <button v-if="state==='edit'" @click="changeState('default')"> Cancelar</button>
     </div>
+
     <div v-if="state === 'edit'">
         <input type="text" v-model="novoItem" @keyup.enter="saveItem"/>
-        <button @click="saveItem()" :disabled="novoItem?false:true">Adicionar</button>
+        <button @click="saveItem" :disabled="novoItem.length>0?false:true">Adicionar</button>
     </div>
-    <h1>Lista de elementos</h1>
-    <h2>{{header}}</h2>
 
-    <ul v-for="item in items">
-        <li > {{item}}</li>
-    </ul>
-    <p v-if="items.length <= 0 ">Nenhum elemento adicionado!</p>
+    <div v-if="listaDeCompras.length>0">
+        <h1>Lista de elementos</h1>
+        <ul  v-for="(item,indice) in listaDeCompras">
+            <li @click="marcarComoComprado(item,indice)" :class="{comprado: item.foiComprado}"> {{item.nome}}</li>
+        </ul>
+    </div>
+    <div v-else><p>Nenhum elemento adicionado!</p></div>
 </div>
 
 <script src="https://unpkg.com/vue@2.7.16/dist/vue.js"></script>
@@ -29,20 +32,30 @@
         el: "#app",
         data: {
             state: 'default',
-            header: 'Digite um texto',
-            novoItem:undefined,
-            items: [
-
-            ]
+            novoItem: "",
+            listaDeCompras: []
         },
         methods:{
             saveItem: function (){
-                this.items.push(this.novoItem);
-                this.novoItem=undefined
+                console.log("saveItem",this.novoItem)
+                this.listaDeCompras.push({
+                    nome: this.novoItem,
+                    foiComprado: false
+                });
+                this.limpainput()
+
+            },
+            limpainput: function (){
+                this.novoItem = ""
             },
             changeState: function (novoEstado){
-                this.state =novoEstado;
-                this.novoItem = undefined
+                console.log("changeState",novoEstado)
+                this.state = novoEstado;
+            },
+            marcarComoComprado: function (itemRecebido,indice){
+                console.log("marcarComoComprado",itemRecebido,indice)
+                this.listaDeCompras[indice].foiComprado = !this.listaDeCompras[indice].foiComprado;
+
             }
         }
     });
