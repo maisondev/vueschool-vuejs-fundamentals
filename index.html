@@ -13,7 +13,8 @@
     </div>
 
     <div v-if="state === 'edit'">
-        <input type="text" v-model="novoItem" @keyup.enter="saveItem"/>
+        <input type="text" v-model="novoItem" @keyup.enter="saveItem" maxlength="20"/>
+        <span>{{contadorCaracteres}}/20</span>
         <button @click="saveItem" :disabled="novoItem.length>0?false:true">Adicionar</button>
     </div>
 
@@ -34,6 +35,11 @@
             state: 'default',
             novoItem: "",
             listaDeCompras: []
+        },
+        computed:{
+            contadorCaracteres(){
+                return this.novoItem.length
+            }
         },
         methods:{
             saveItem: function (){
